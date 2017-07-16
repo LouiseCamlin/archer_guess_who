@@ -1,0 +1,29 @@
+img{
+  padding: 10px;
+  height:200px;
+  width: 200px;
+  text-align: center;
+  border: 1px solid white;
+  margin: 10px;
+}
+
+#game-board{
+  text-align: center;
+  padding-top: 20px;
+}
+
+h1{
+  font-family: "Baveuse";
+  color: white;
+  font-size: 50px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+#question-select{
+  text-align: center;
+}
+
+body{
+  background: black;
+}
