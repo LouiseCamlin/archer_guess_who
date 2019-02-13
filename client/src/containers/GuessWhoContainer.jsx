@@ -9,23 +9,46 @@ class GuessWhoContainer extends React.Component {
     super(props)
     const characterSeeds = CharacterSeeds()
     this.state = {
-      characters: characterSeeds
+      characters: characterSeeds,
+      characterToGuess: null,
+      focusQuestion: {
+        questionKey: null,
+        questionValue: null
+      },
+      guess: null,
     }
+    this.setFocusQuestion = this.setFocusQuestion.bind(this)
+    this.handleDoubleClick = this.handleDoubleClick.bind(this)
   }
 
-  setFocusQuestion(character){
-    this.setState({focusQuestion: character}, () => {
-      console.log("Hurray!");
-      console.log(character);
-    })
+  componentDidMount(){
+    this.getRandomCharacter()
+  }
+
+  getRandomCharacter(){
+    const characterArray = this.state.characters.slice();
+    const randomCharacter =  _.sample(characterArray)
+    this.setState({characterToGuess: randomCharacter}, () => console.log(this.state))
+  }
+
+  handleDoubleClick(event) {
+    event.target.classList.toggle('greyed')
+  }
+
+  setFocusQuestion(key, value){
+    this.setState({focusQuestion: {
+        questionKey: key,
+        questionValuevalue: value
+      }
+    }, () => console.log(this.state.focusQuestion.questionValue))
   }
 
   render(){
     return (
       <div id="main-container">
         <h1>Guess Who</h1>
-        <QuestionSelector characters={this.state.characters} selectQuestion={this.setFocusQuestion.bind(this)}/>
-        <GameBoard characters={this.state.characters}/>
+        <QuestionSelector characters={this.state.characters} setFocusQuestion={this.setFocusQuestion} />
+        <GameBoard characters={this.state.characters} handleDoubleClick={this.handleDoubleClick}/>
       </div>
     );
   }

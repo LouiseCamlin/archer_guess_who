@@ -27,3 +27,8 @@ h1{
 body{
   background: black;
 }
+
+.greyed {
+  opacity : 0.4;
+  filter: alpha(opacity=40);
+}

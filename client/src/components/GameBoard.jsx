@@ -5,18 +5,15 @@ const GameBoard = (props) => {
 
   const characters = props.characters.map((character, index) => {
     return <Character key={index}
-     character={character} />
+      character={character}
+      handleDoubleClick={props.handleDoubleClick}/>
   })
-
-
-
 
   return (
     <div id='game-board'>
       {characters}
     </div>
   )
-
 }
 
 export default GameBoard
