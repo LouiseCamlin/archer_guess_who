@@ -3,7 +3,7 @@ class Character {
     this.name = options.name,
     this.gender = options.gender,
     this.eyes = options.eyes,
-    this.hairColour = options.hairColour,
+    this.hair = options.hair,
     this.moustache = options.moustache,
     this.url = options.url
   }

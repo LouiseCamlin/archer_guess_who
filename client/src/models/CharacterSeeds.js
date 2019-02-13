@@ -6,7 +6,7 @@ const CharacterSeeds = function() {
       name: "Archer",
       gender: "male",
       eyes: "blue",
-      hairColour: "black",
+      hair: "black",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/archer_sterling_5461.jpg"
     }),
@@ -15,7 +15,7 @@ const CharacterSeeds = function() {
       name: "Lana",
       gender: "female",
       eyes: "green",
-      hairColour: "brown",
+      hair: "brown",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/kane_lana_968.jpg"
     }),
@@ -24,7 +24,7 @@ const CharacterSeeds = function() {
       name: "Cyril",
       gender: "male",
       eyes: "brown",
-      hairColour: "black",
+      hair: "black",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/figgis_cyril_8946.jpg"
     }),
@@ -33,7 +33,7 @@ const CharacterSeeds = function() {
       name: "Malory",
       gender: "female",
       eyes: "blue",
-      hairColour: "grey",
+      hair: "grey",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/archer_malory_190.jpg"
     }),
@@ -42,7 +42,7 @@ const CharacterSeeds = function() {
       name: "Krieger",
       gender: "male",
       eyes: "green",
-      hairColour: "brown",
+      hair: "brown",
       moustache: "yes",
       url: "http://static.tvtropes.org/pmwiki/pub/images/krieger_algernop_2820.jpg"
     }),
@@ -51,7 +51,7 @@ const CharacterSeeds = function() {
       name: "Pam",
       gender: "female",
       eyes: "blue",
-      hairColour: "blonde",
+      hair: "blonde",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/pameladolphin_949.jpg"
     }),
@@ -60,7 +60,7 @@ const CharacterSeeds = function() {
       name: "Cheryl",
       gender: "female",
       eyes: "blue",
-      hairColour: "brown",
+      hair: "brown",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/tunt_cherylcarol_3853.jpg"
     }),
@@ -69,7 +69,7 @@ const CharacterSeeds = function() {
       name: "Ray",
       gender: "male",
       eyes: "brown",
-      hairColour: "blonde",
+      hair: "blonde",
       moustache: "yes",
       url: "/public/images/ray-background3.jpg"
     }),
@@ -78,7 +78,7 @@ const CharacterSeeds = function() {
       name: "Woodhouse",
       gender: "male",
       eyes: "blue",
-      hairColour: "grey",
+      hair: "grey",
       moustache: "no",
       url: "http://static.tvtropes.org/pmwiki/pub/images/woodhouse__7670.jpg"
     })
