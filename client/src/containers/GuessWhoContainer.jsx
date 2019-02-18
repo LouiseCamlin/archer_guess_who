@@ -12,12 +12,12 @@ class GuessWhoContainer extends React.Component {
       characters: characterSeeds,
       characterToGuess: null,
       focusQuestion: {
-        questionKey: null,
-        questionValue: null
-      },
-      guess: null,
+        questionKey: "name",
+        questionValue: characterSeeds[0].name
+      }
     }
-    this.setFocusQuestion = this.setFocusQuestion.bind(this)
+    this.setFocusValue = this.setFocusValue.bind(this)
+    this.setFocusKey = this.setFocusKey.bind(this)
     this.handleDoubleClick = this.handleDoubleClick.bind(this)
   }
 
@@ -28,27 +28,44 @@ class GuessWhoContainer extends React.Component {
   getRandomCharacter(){
     const characterArray = this.state.characters.slice();
     const randomCharacter =  _.sample(characterArray)
-    this.setState({characterToGuess: randomCharacter}, () => console.log(this.state))
+    this.setState({
+      characterToGuess: randomCharacter
+    })
   }
 
   handleDoubleClick(event) {
     event.target.classList.toggle('greyed')
   }
 
-  setFocusQuestion(key, value){
-    this.setState({focusQuestion: {
-        questionKey: key,
-        questionValuevalue: value
+  setFocusValue(value) {
+    this.setState({
+      focusQuestion: {
+        questionValue: value
       }
-    }, () => console.log(this.state.focusQuestion.questionValue))
+    })
+  }
+
+  setFocusKey(key) {
+    this.setState({
+      focusQuestion: {
+        questionKey: key
+      }
+    })
   }
 
   render(){
     return (
       <div id="main-container">
         <h1>Guess Who</h1>
-        <QuestionSelector characters={this.state.characters} setFocusQuestion={this.setFocusQuestion} />
-        <GameBoard characters={this.state.characters} handleDoubleClick={this.handleDoubleClick}/>
+        <QuestionSelector
+          characters={this.state.characters}
+          characterToGuess={this.state.characterToGuess}
+          setFocusValue={this.setFocusValue}
+          setFocusKey={this.setFocusKey}
+          />
+        <GameBoard
+          characters={this.state.characters}
+          handleDoubleClick={this.handleDoubleClick}/>
       </div>
     );
   }
