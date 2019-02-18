@@ -21,7 +21,7 @@ class QuestionSelector extends React.Component {
     this.setState({
       currentKey: newKey,
       currentValue: this.props.characters[0][newKey]
-    })
+    }, () => {console.log("key change", this.state);})
   }
 
   handleValueChange(event) {
@@ -29,7 +29,7 @@ class QuestionSelector extends React.Component {
     this.props.setFocusValue(newValue)
     this.setState({
       currentValue: newValue
-    })
+    }, () => {console.log("value change", this.state);})
   }
 
   handleClick(event){
@@ -54,13 +54,14 @@ class QuestionSelector extends React.Component {
     })
   }
 
-  showAnswer() {
+  renderAnswer() {
     const key = this.state.currentKey
+
     if (this.state.guess != null) {
       if (this.state.guess.value === this.props.characterToGuess.name) {
-        return " Congrats, you won!"
+        return " Congrats, you won"
       }
-      if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value != this.props.characterToGuess.name ) {
+      if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value === this.props.characterToGuess[key] ) {
         return " yes"
       }
       return " no"
@@ -91,7 +92,8 @@ class QuestionSelector extends React.Component {
       </form>
         <div id="answer-box">
           <h3>
-            Answer: {this.showAnswer()}
+          Answer:
+          {this.renderAnswer()}
           </h3>
         </div>
       </div>

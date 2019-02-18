@@ -9636,7 +9636,9 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
   getRandomCharacter() {
     const characterArray = this.state.characters.slice();
     const randomCharacter = _.sample(characterArray);
-    this.setState({ characterToGuess: randomCharacter }, () => console.log("characterToGuess", this.state.characterToGuess));
+    this.setState({
+      characterToGuess: randomCharacter
+    });
   }
 
   handleDoubleClick(event) {
@@ -9648,7 +9650,7 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
       focusQuestion: {
         questionValue: value
       }
-    }, () => console.log("questionValueChange", this.state.focusQuestion));
+    });
   }
 
   setFocusKey(key) {
@@ -9656,27 +9658,8 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
       focusQuestion: {
         questionKey: key
       }
-    }, () => console.log("questionKeyChange", this.state.focusQuestion));
+    });
   }
-
-  // checkSubmission(value) {
-  //   console.log("question value", this.state.focusQuestion);
-  //   if (this.state.characterToGuess === null) {
-  //     return null
-  //   }
-  //   if (this.state.characterToGuess[value] === this.state.focusQuestion.questionValue) {
-  //     return true
-  //   }
-  //   return null
-  // }
-
-  // checkSubmission(value) {
-  //   if (this.state.characterToGuess ===)
-  // }
-  //
-  // renderAnswer() {
-  //   if (this.state.cha)
-  // }
 
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -9693,8 +9676,9 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
         setFocusValue: this.setFocusValue,
         setFocusKey: this.setFocusKey
       }),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GameBoard_jsx__["a" /* default */], { characters: this.state.characters, handleDoubleClick: this.handleDoubleClick })
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GameBoard_jsx__["a" /* default */], {
+        characters: this.state.characters,
+        handleDoubleClick: this.handleDoubleClick })
     );
   }
 
@@ -9844,11 +9828,12 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
 
   renderAnswer() {
     const key = this.state.currentKey;
+
     if (this.state.guess != null) {
       if (this.state.guess.value === this.props.characterToGuess.name) {
-        return " Congrats, you won!";
+        return " Congrats, you won";
       }
-      if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value != this.props.characterToGuess.name) {
+      if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value === this.props.characterToGuess[key]) {
         return " yes";
       }
       return " no";
