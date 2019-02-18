@@ -9620,12 +9620,12 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
       characters: characterSeeds,
       characterToGuess: null,
       focusQuestion: {
-        questionKey: null,
-        questionValue: null
-      },
-      guess: null
+        questionKey: "name",
+        questionValue: characterSeeds[0].name
+      }
     };
-    this.setFocusQuestion = this.setFocusQuestion.bind(this);
+    this.setFocusValue = this.setFocusValue.bind(this);
+    this.setFocusKey = this.setFocusKey.bind(this);
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
   }
 
@@ -9636,20 +9636,47 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
   getRandomCharacter() {
     const characterArray = this.state.characters.slice();
     const randomCharacter = _.sample(characterArray);
-    this.setState({ characterToGuess: randomCharacter }, () => console.log(this.state));
+    this.setState({ characterToGuess: randomCharacter }, () => console.log("characterToGuess", this.state.characterToGuess));
   }
 
   handleDoubleClick(event) {
     event.target.classList.toggle('greyed');
   }
 
-  setFocusQuestion(key, value) {
-    this.setState({ focusQuestion: {
-        questionKey: key,
-        questionValuevalue: value
+  setFocusValue(value) {
+    this.setState({
+      focusQuestion: {
+        questionValue: value
       }
-    }, () => console.log(this.state.focusQuestion.questionValue));
+    }, () => console.log("questionValueChange", this.state.focusQuestion));
   }
+
+  setFocusKey(key) {
+    this.setState({
+      focusQuestion: {
+        questionKey: key
+      }
+    }, () => console.log("questionKeyChange", this.state.focusQuestion));
+  }
+
+  // checkSubmission(value) {
+  //   console.log("question value", this.state.focusQuestion);
+  //   if (this.state.characterToGuess === null) {
+  //     return null
+  //   }
+  //   if (this.state.characterToGuess[value] === this.state.focusQuestion.questionValue) {
+  //     return true
+  //   }
+  //   return null
+  // }
+
+  // checkSubmission(value) {
+  //   if (this.state.characterToGuess ===)
+  // }
+  //
+  // renderAnswer() {
+  //   if (this.state.cha)
+  // }
 
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -9660,7 +9687,13 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
         null,
         'Guess Who'
       ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_QuestionSelector_jsx__["a" /* default */], { characters: this.state.characters, setFocusQuestion: this.setFocusQuestion }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_QuestionSelector_jsx__["a" /* default */], {
+        characters: this.state.characters,
+        characterToGuess: this.state.characterToGuess,
+        setFocusValue: this.setFocusValue,
+        setFocusKey: this.setFocusKey
+      }),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', null),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GameBoard_jsx__["a" /* default */], { characters: this.state.characters, handleDoubleClick: this.handleDoubleClick })
     );
   }
@@ -9758,8 +9791,9 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
   constructor(props) {
     super(props);
     this.state = {
-      currentKey: "gender",
-      currentValue: this.props.characters[0].gender
+      currentKey: "name",
+      currentValue: this.props.characters[0].name,
+      guess: null
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleKeyChange = this.handleKeyChange.bind(this);
@@ -9768,7 +9802,7 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
 
   handleKeyChange(event) {
     const newKey = event.target.value;
-    console.log("event", event.target);
+    this.props.setFocusKey(newKey);
     this.setState({
       currentKey: newKey,
       currentValue: this.props.characters[0][newKey]
@@ -9779,16 +9813,23 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
 
   handleValueChange(event) {
     const newValue = event.target.value;
-    this.setState({ currentValue: newValue }, () => {
-      console.log("value change", this.state.currentValue);
+    this.props.setFocusValue(newValue);
+    this.setState({
+      currentValue: newValue
+    }, () => {
+      console.log("value change", this.state);
     });
   }
 
   handleClick(event) {
     event.preventDefault();
-    const questionKey = this.state.currentKey;
-    const questionValue = this.state.currentValue;
-    this.props.setFocusQuestion(questionKey, questionValue);
+    const currentKey = this.state.currentKey;
+    const currentValue = this.state.currentValue;
+    this.setState({ guess: {
+        key: currentKey,
+        value: currentValue
+      }
+    });
   }
 
   createSelectOptions(array) {
@@ -9801,6 +9842,19 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
     });
   }
 
+  renderAnswer() {
+    const key = this.state.currentKey;
+    if (this.state.guess != null) {
+      if (this.state.guess.value === this.props.characterToGuess.name) {
+        return " Congrats, you won!";
+      }
+      if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value != this.props.characterToGuess.name) {
+        return " yes";
+      }
+      return " no";
+    }
+  }
+
   getValueSet(key) {
     const valueSet = this.props.characters.map(character => {
       return character[key];
@@ -9809,9 +9863,8 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
   }
 
   render() {
-    const keySet = Object.keys(this.props.characters[0]).filter(key => key !== "url" && key !== "name");
+    const keySet = Object.keys(this.props.characters[0]).filter(key => key !== "url");
     const values = this.getValueSet(this.state.currentKey);
-    const valueNodes = this.createSelectOptions(values);
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
@@ -9827,12 +9880,22 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'select',
           { id: 'characteristic-ans', onChange: this.handleValueChange },
-          valueNodes
+          this.createSelectOptions(values)
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'button',
           { type: 'submit', onClick: this.handleClick },
           'Submit'
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { id: 'answer-box' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h3',
+          null,
+          'Answer:',
+          this.renderAnswer()
         )
       )
     );
