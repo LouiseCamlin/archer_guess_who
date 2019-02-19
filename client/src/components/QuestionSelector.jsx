@@ -59,7 +59,7 @@ class QuestionSelector extends React.Component {
 
     if (this.state.guess != null) {
       if (this.state.guess.value === this.props.characterToGuess.name) {
-        return " Congrats, you won"
+        return " Congrats, you won!"
       }
       if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value === this.props.characterToGuess[key] ) {
         return " yes"
