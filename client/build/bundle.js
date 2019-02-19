@@ -9831,7 +9831,7 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
 
     if (this.state.guess != null) {
       if (this.state.guess.value === this.props.characterToGuess.name) {
-        return " Congrats, you won";
+        return " Congrats, you won!";
       }
       if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value === this.props.characterToGuess[key]) {
         return " yes";
