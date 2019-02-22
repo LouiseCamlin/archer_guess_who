@@ -9637,6 +9637,8 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
   }
 
   handleClick(event, currentKey, currentValue) {
+    const image = document.querySelectorAll('.greyed');
+    console.log(image);
     this.setState({ guess: {
         key: currentKey,
         value: currentValue
@@ -9644,6 +9646,10 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
     }, () => {
       console.log("guess", this.state.guess);
     });
+  }
+
+  removeClassFromImage() {
+    document.querySelectorAll('img').forEach(element => element.classList.remove('greyed'));
   }
 
   resetGame() {
@@ -9654,6 +9660,7 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
       characterToGuess: this.getRandomCharacter(characterSeeds),
       guess: null
     });
+    this.removeClassFromImage();
   }
 
   render() {
@@ -9669,12 +9676,17 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
         characters: this.state.characters,
         characterToGuess: this.state.characterToGuess,
         handleClick: this.handleClick,
-        guess: this.state.guess
+        guess: this.state.guess,
+        resetGame: this.resetGame
       }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'button',
-        { onClick: this.resetGame },
-        'Reset Game'
+        'div',
+        { id: 'reset' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'button',
+          { id: 'reset-button', onClick: this.resetGame },
+          'Reset Game'
+        )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GameBoard_jsx__["a" /* default */], {
         characters: this.state.characters,
