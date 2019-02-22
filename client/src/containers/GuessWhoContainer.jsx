@@ -10,9 +10,12 @@ class GuessWhoContainer extends React.Component {
     const characterSeeds = CharacterSeeds()
     this.state = {
       characters: characterSeeds,
-      characterToGuess: this.getRandomCharacter(characterSeeds)
+      characterToGuess: this.getRandomCharacter(characterSeeds),
+      guess: null
     }
     this.handleDoubleClick = this.handleDoubleClick.bind(this)
+    this.resetGame = this.resetGame.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   getRandomCharacter(characters){
@@ -25,6 +28,25 @@ class GuessWhoContainer extends React.Component {
     event.target.classList.toggle('greyed')
   }
 
+  handleClick(event, currentKey, currentValue){
+    this.setState({ guess:
+      {
+        key: currentKey,
+        value: currentValue
+      }
+    }, () => {console.log("guess", this.state.guess);})
+  }
+
+  resetGame() {
+    console.log("RESET");
+    const characterSeeds = CharacterSeeds()
+    this.setState({
+      characters: characterSeeds,
+      characterToGuess: this.getRandomCharacter(characterSeeds),
+      guess: null
+    })
+  }
+
   render(){
     return (
       <div id="main-container">
@@ -32,7 +54,10 @@ class GuessWhoContainer extends React.Component {
         <QuestionSelector
           characters={this.state.characters}
           characterToGuess={this.state.characterToGuess}
+          handleClick={this.handleClick}
+          guess={this.state.guess}
           />
+        <button onClick={this.resetGame}>Reset Game</button>
         <GameBoard
           characters={this.state.characters}
           handleDoubleClick={this.handleDoubleClick}/>
