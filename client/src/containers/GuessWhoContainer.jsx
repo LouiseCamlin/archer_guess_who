@@ -24,7 +24,7 @@ class GuessWhoContainer extends React.Component {
     const randomCharacter =  _.sample(characterArray)
     this.setState({
       characterToGuess: randomCharacter
-    }, () => {console.log(this.state.characterToGuess)})
+    })
   }
 
   handleDoubleClick(event) {
