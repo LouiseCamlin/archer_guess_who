@@ -8,7 +8,7 @@ class QuestionSelector extends React.Component {
     this.state = {
       currentKey: "name",
       currentValue: this.props.characters[0].name,
-      guess: null
+      question: null
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleKeyChange = this.handleKeyChange.bind(this)
@@ -19,32 +19,21 @@ class QuestionSelector extends React.Component {
     const newKey = event.target.value
     this.setState({
       currentKey: newKey,
-      currentValue: this.props.characters[0][newKey]
+      currentValue: this.props.characters[0][newKey],
+      question: null
     }, () => {console.log("key change", this.state);})
   }
 
   handleValueChange(event) {
     const newValue = event.target.value
     this.setState({
-      currentValue: newValue
+      currentValue: newValue,
+      question: null
     }, () => {console.log("value change", this.state);})
-  }
-
-  handleClick(event){
-    event.preventDefault()
-    const currentKey = this.state.currentKey
-    const currentValue = this.state.currentValue
-    this.setState({ guess:
-      {
-        key: currentKey,
-        value: currentValue
-      }
-    }, () => {console.log("guess", this.state.guess);})
   }
 
   createSelectOptions(array) {
     return array.map((feature, index) => {
-      console.log("feature & index", feature + " " + index);
       return (
         <option key={index} value={feature}>
           {feature}
@@ -56,11 +45,11 @@ class QuestionSelector extends React.Component {
   renderAnswer() {
     const key = this.state.currentKey
 
-    if (this.state.guess != null) {
-      if (this.state.guess.value === this.props.characterToGuess.name) {
+    if (this.props.guess != null && this.state.question) {
+      if (this.props.guess.value === this.props.characterToGuess.name) {
         return " Congrats, you won!"
       }
-      if (this.state.guess.value === this.props.characterToGuess[key] && this.state.guess.value === this.props.characterToGuess[key] ) {
+      if (this.props.guess.value === this.props.characterToGuess[key] && this.props.guess.value === this.props.characterToGuess[key] ) {
         return " yes"
       }
       return " no"
@@ -74,15 +63,23 @@ class QuestionSelector extends React.Component {
    return _.uniq(valueSet)
   }
 
+  handleClick(event) {
+    event.preventDefault()
+    const currentKey = this.state.currentKey
+    const currentValue = this.state.currentValue
+    this.props.handleClick(event, currentKey, currentValue)
+    this.setState({question: true})
+  }
+
   render() {
+    console.log(this.props);
     const keySet = Object.keys(this.props.characters[0]).filter((key) => key !== "url")
     const values = this.getValueSet(this.state.currentKey)
-    console.log(values);
 
     return (
       <div id="question-select">
       <form>
-        <select value={this.state.currentKey} id="characteristic-qu" onChange={this.handleKeyChange}>
+        <select id="characteristic-qu" onChange={this.handleKeyChange}>
           {this.createSelectOptions(keySet)}
         </select>
         <select id="characteristic-ans" value={this.state.currentValue} onChange={this.handleValueChange}>
