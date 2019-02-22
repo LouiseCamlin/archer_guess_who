@@ -10,21 +10,15 @@ class GuessWhoContainer extends React.Component {
     const characterSeeds = CharacterSeeds()
     this.state = {
       characters: characterSeeds,
-      characterToGuess: null
+      characterToGuess: this.getRandomCharacter(characterSeeds)
     }
     this.handleDoubleClick = this.handleDoubleClick.bind(this)
   }
 
-  componentDidMount(){
-    this.getRandomCharacter()
-  }
-
-  getRandomCharacter(){
-    const characterArray = this.state.characters.slice();
+  getRandomCharacter(characters){
+    const characterArray = characters.slice();
     const randomCharacter =  _.sample(characterArray)
-    this.setState({
-      characterToGuess: randomCharacter
-    })
+    return randomCharacter
   }
 
   handleDoubleClick(event) {

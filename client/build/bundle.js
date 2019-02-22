@@ -9618,21 +9618,15 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
     const characterSeeds = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__models_CharacterSeeds_js__["a" /* default */])();
     this.state = {
       characters: characterSeeds,
-      characterToGuess: null
+      characterToGuess: this.getRandomCharacter(characterSeeds)
     };
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
   }
 
-  componentDidMount() {
-    this.getRandomCharacter();
-  }
-
-  getRandomCharacter() {
-    const characterArray = this.state.characters.slice();
+  getRandomCharacter(characters) {
+    const characterArray = characters.slice();
     const randomCharacter = _.sample(characterArray);
-    this.setState({
-      characterToGuess: randomCharacter
-    });
+    return randomCharacter;
   }
 
   handleDoubleClick(event) {
@@ -9827,7 +9821,6 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
   render() {
     const keySet = Object.keys(this.props.characters[0]).filter(key => key !== "url");
     const values = this.getValueSet(this.state.currentKey);
-    console.log(values);
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
