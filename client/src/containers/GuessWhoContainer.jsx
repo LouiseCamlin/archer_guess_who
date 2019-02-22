@@ -10,14 +10,8 @@ class GuessWhoContainer extends React.Component {
     const characterSeeds = CharacterSeeds()
     this.state = {
       characters: characterSeeds,
-      characterToGuess: null,
-      focusQuestion: {
-        questionKey: "name",
-        questionValue: characterSeeds[0].name
-      }
+      characterToGuess: null
     }
-    this.setFocusValue = this.setFocusValue.bind(this)
-    this.setFocusKey = this.setFocusKey.bind(this)
     this.handleDoubleClick = this.handleDoubleClick.bind(this)
   }
 
@@ -30,27 +24,11 @@ class GuessWhoContainer extends React.Component {
     const randomCharacter =  _.sample(characterArray)
     this.setState({
       characterToGuess: randomCharacter
-    })
+    }, () => {console.log(this.state.characterToGuess)})
   }
 
   handleDoubleClick(event) {
     event.target.classList.toggle('greyed')
-  }
-
-  setFocusValue(value) {
-    this.setState({
-      focusQuestion: {
-        questionValue: value
-      }
-    })
-  }
-
-  setFocusKey(key) {
-    this.setState({
-      focusQuestion: {
-        questionKey: key
-      }
-    })
   }
 
   render(){
@@ -60,8 +38,6 @@ class GuessWhoContainer extends React.Component {
         <QuestionSelector
           characters={this.state.characters}
           characterToGuess={this.state.characterToGuess}
-          setFocusValue={this.setFocusValue}
-          setFocusKey={this.setFocusKey}
           />
         <GameBoard
           characters={this.state.characters}
