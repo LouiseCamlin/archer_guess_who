@@ -17,7 +17,6 @@ class QuestionSelector extends React.Component {
 
   handleKeyChange(event) {
     const newKey = event.target.value
-    this.props.setFocusKey(newKey)
     this.setState({
       currentKey: newKey,
       currentValue: this.props.characters[0][newKey]
@@ -26,7 +25,6 @@ class QuestionSelector extends React.Component {
 
   handleValueChange(event) {
     const newValue = event.target.value
-    this.props.setFocusValue(newValue)
     this.setState({
       currentValue: newValue
     }, () => {console.log("value change", this.state);})
@@ -41,11 +39,12 @@ class QuestionSelector extends React.Component {
         key: currentKey,
         value: currentValue
       }
-    })
+    }, () => {console.log("guess", this.state.guess);})
   }
 
   createSelectOptions(array) {
     return array.map((feature, index) => {
+      console.log("feature & index", feature + " " + index);
       return (
         <option key={index} value={feature}>
           {feature}
@@ -78,14 +77,15 @@ class QuestionSelector extends React.Component {
   render() {
     const keySet = Object.keys(this.props.characters[0]).filter((key) => key !== "url")
     const values = this.getValueSet(this.state.currentKey)
+    console.log(values);
 
     return (
       <div id="question-select">
       <form>
-        <select id="characteristic-qu" onChange={this.handleKeyChange}>
+        <select value={this.state.currentKey} id="characteristic-qu" onChange={this.handleKeyChange}>
           {this.createSelectOptions(keySet)}
         </select>
-        <select id="characteristic-ans" onChange={this.handleValueChange}>
+        <select id="characteristic-ans" value={this.state.currentValue} onChange={this.handleValueChange}>
           {this.createSelectOptions(values)}
         </select>
         <button type="submit" onClick={this.handleClick}>Submit</button>

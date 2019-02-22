@@ -9618,14 +9618,8 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
     const characterSeeds = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__models_CharacterSeeds_js__["a" /* default */])();
     this.state = {
       characters: characterSeeds,
-      characterToGuess: null,
-      focusQuestion: {
-        questionKey: "name",
-        questionValue: characterSeeds[0].name
-      }
+      characterToGuess: null
     };
-    this.setFocusValue = this.setFocusValue.bind(this);
-    this.setFocusKey = this.setFocusKey.bind(this);
     this.handleDoubleClick = this.handleDoubleClick.bind(this);
   }
 
@@ -9645,22 +9639,6 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
     event.target.classList.toggle('greyed');
   }
 
-  setFocusValue(value) {
-    this.setState({
-      focusQuestion: {
-        questionValue: value
-      }
-    });
-  }
-
-  setFocusKey(key) {
-    this.setState({
-      focusQuestion: {
-        questionKey: key
-      }
-    });
-  }
-
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
@@ -9672,9 +9650,7 @@ class GuessWhoContainer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Co
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__components_QuestionSelector_jsx__["a" /* default */], {
         characters: this.state.characters,
-        characterToGuess: this.state.characterToGuess,
-        setFocusValue: this.setFocusValue,
-        setFocusKey: this.setFocusKey
+        characterToGuess: this.state.characterToGuess
       }),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__components_GameBoard_jsx__["a" /* default */], {
         characters: this.state.characters,
@@ -9786,7 +9762,6 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
 
   handleKeyChange(event) {
     const newKey = event.target.value;
-    this.props.setFocusKey(newKey);
     this.setState({
       currentKey: newKey,
       currentValue: this.props.characters[0][newKey]
@@ -9797,7 +9772,6 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
 
   handleValueChange(event) {
     const newValue = event.target.value;
-    this.props.setFocusValue(newValue);
     this.setState({
       currentValue: newValue
     }, () => {
@@ -9813,11 +9787,14 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
         key: currentKey,
         value: currentValue
       }
+    }, () => {
+      console.log("guess", this.state.guess);
     });
   }
 
   createSelectOptions(array) {
     return array.map((feature, index) => {
+      console.log("feature & index", feature + " " + index);
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'option',
         { key: index, value: feature },
@@ -9850,6 +9827,7 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
   render() {
     const keySet = Object.keys(this.props.characters[0]).filter(key => key !== "url");
     const values = this.getValueSet(this.state.currentKey);
+    console.log(values);
 
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
@@ -9859,12 +9837,12 @@ class QuestionSelector extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Com
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'select',
-          { id: 'characteristic-qu', onChange: this.handleKeyChange },
+          { value: this.state.currentKey, id: 'characteristic-qu', onChange: this.handleKeyChange },
           this.createSelectOptions(keySet)
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'select',
-          { id: 'characteristic-ans', onChange: this.handleValueChange },
+          { id: 'characteristic-ans', value: this.state.currentValue, onChange: this.handleValueChange },
           this.createSelectOptions(values)
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
